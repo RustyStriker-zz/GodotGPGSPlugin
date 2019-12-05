@@ -80,7 +80,7 @@ _on_leader_submit() # Callback for when a score was submitted to the leaderboard
 _on_leader_show() # Callback for when a leaderboard is shown
 
 _on_leader_failed(error) # Callback for when a leaderboard failed to show, returns the error in a string format
-
+```
 
 ## Troubleshooting
  - First of all make sure you are able to compile to android without the module
