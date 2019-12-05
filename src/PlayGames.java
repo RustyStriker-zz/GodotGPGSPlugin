@@ -95,8 +95,10 @@ public class PlayGames extends Godot.SingletonBase {
       mClient.signOut();
     }
 
-    public void successSignIn(){
+    private void successSignIn(){
       Log.d(TAG,"Sign in :D");
+
+      GodotLib.calldeferred(instanceId, "_on_successful_sign_in", new Object[]{ });
 
       mAchie = Games.getAchievementsClient(activity, mAccount);
       mLeader = Games.getLeaderboardsClient(activity, mAccount);
@@ -145,32 +147,37 @@ public class PlayGames extends Godot.SingletonBase {
         Status s = result.getStatus();
 
 			Log.w(TAG, "SignInResult::Failed code=" + s.getStatusCode() + ", Message: " + s.getStatusMessage());
+      GodotLib.calldeferred(instanceId, "_on_failed_sign_in", new Object[]{ });
       }
 		}
 	}
 
-    public void achievmentUnlock(final String a_id){
+    public void achievementUnlock(final String a_id){
       if(mAccount != null)
       {
         mAchie.unlock(a_id);
+        GodotLib.calldeferred(instanceId, "_on_achievement_unlock", new Object[]{a_id });
       }
     }
-    public void achievmentIncrease(final String a_id, final int amount){
+    public void achievementIncrease(final String a_id, final int amount){
       if(mAccount != null){
         mAchie.increment(a_id,amount);
+        GodotLib.calldeferred(instanceId, "_on_achievement_increase", new Object[]{a_id,amount });
       }
     }
-    public void achievmentShowList(){
+    public void achievementShowList(){
       if(mAccount != null){
         mAchie.getAchievementsIntent().addOnSuccessListener(new OnSuccessListener<Intent>() {
 				@Override
 				public void onSuccess(Intent intent) {
 					activity.startActivityForResult(intent, REQUEST_ACHIEVEMENTS);
+          GodotLib.calldeferred(instanceId, "_on_achievement_list_show", new Object[]{ });
 				}
 			}).addOnFailureListener(new OnFailureListener() {
 				@Override
 				public void onFailure(Exception e) {
 					Log.d(TAG, "Show Leaderboard failed:: " + e.toString());
+          GodotLib.calldeferred(instanceId, "_on_achievement_list_failed", new Object[]{e.toString()});
 				}
 			});
       }
@@ -178,6 +185,7 @@ public class PlayGames extends Godot.SingletonBase {
     public void leaderSubmit(final String l_id,int score){
       if(mAccount != null){
         mLeader.submitScore(l_id,score);
+        GodotLib.calldeferred(instanceId, "_on_leader_submit", new Object[]{ });
       }
     }
     public void leaderShow(final String l_id){
@@ -186,11 +194,13 @@ public class PlayGames extends Godot.SingletonBase {
 				@Override
 				public void onSuccess (Intent intent) {
 					activity.startActivityForResult(intent, REQUEST_LEADERBOARD);
+          GodotLib.calldeferred(instanceId, "_on_leader_show", new Object[]{ });
 				}
 			}).addOnFailureListener(new OnFailureListener() {
 				@Override
 				public void onFailure(Exception e) {
 					Log.d(TAG, "Showing Leaderboard failed: " + e.toString());
+          GodotLib.calldeferred(instanceId, "_on_leader_failed", new Object[]{e.toString });
 				}
 			});
       }
@@ -201,11 +211,13 @@ public class PlayGames extends Godot.SingletonBase {
 				@Override
 				public void onSuccess (Intent intent) {
 					activity.startActivityForResult(intent, REQUEST_LEADERBOARD);
+          GodotLib.calldeferred(instanceId, "_on_leader_show", new Object[]{ });
 				}
 			}).addOnFailureListener(new OnFailureListener() {
 				@Override
 				public void onFailure(Exception e) {
 					Log.d(TAG, "Showing Leader list failed: " + e.toString());
+          GodotLib.calldeferred(instanceId, "_on_leader_failed", new Object[]{e.toString });
 				}
 			});
       }
@@ -226,7 +238,7 @@ public class PlayGames extends Godot.SingletonBase {
             {
                 "getInstanceId",
                 "google_init","start","connect","disconnect","signInSilently",
-                "achievmentUnlock","achievmentIncrease","achievmentShowList",
+                "achievementUnlock","achievementIncrease","achievementShowList",
                 "leaderShow","leaderSubmit","leaderShowList"
             });
         activity = p_activity;
