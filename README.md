@@ -7,7 +7,7 @@ Currently this plugin supports:
  - Leaderboards support
 
 ## How to use
- - Configure, install and enable the "Android Custom Template" for your project, just follow the official documentation;
+ - Configure, install and enable the "Android Custom Template" for your project, just follow the [official documentation](https://docs.godotengine.org/en/latest/getting_started/workflow/export/android_custom_build.html)
  - download or clone this repository
  - drop the folder inside the `res://android/` directory on your Godot project.
  - change the ```bash{ Your app id HERE }``` to your app id found in the google play developer console, should look like:
