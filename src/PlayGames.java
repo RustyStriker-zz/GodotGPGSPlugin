@@ -200,7 +200,7 @@ public class PlayGames extends Godot.SingletonBase {
 				@Override
 				public void onFailure(Exception e) {
 					Log.d(TAG, "Showing Leaderboard failed: " + e.toString());
-          GodotLib.calldeferred(instanceId, "_on_leader_failed", new Object[]{e.toString });
+          GodotLib.calldeferred(instanceId, "_on_leader_failed", new Object[]{e.toString() });
 				}
 			});
       }
@@ -217,7 +217,7 @@ public class PlayGames extends Godot.SingletonBase {
 				@Override
 				public void onFailure(Exception e) {
 					Log.d(TAG, "Showing Leader list failed: " + e.toString());
-          GodotLib.calldeferred(instanceId, "_on_leader_failed", new Object[]{e.toString });
+          GodotLib.calldeferred(instanceId, "_on_leader_failed", new Object[]{e.toString() });
 				}
 			});
       }
