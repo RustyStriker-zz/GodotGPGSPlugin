@@ -27,7 +27,7 @@ Currently this plugin supports:
  ```
  org/godotengine/godot/someRandomModule,org/godotengine/godot/PlayGames
 ```
-
+ - on the Project -> Export -> Android -> Options -> Permissions: check the permissions for Access Network State and Internet
 ## Known errors
  - SilentLogIn() doesnt work
  - when building the game to your android device(at lease for me) it doesnt connect to the google play games successfully
